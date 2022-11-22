@@ -34,69 +34,69 @@ public class Player : MonoBehaviour
         if (hit.gameObject.tag == "Lava") //om den träffar objekt med tagen lava
         {
             TakeDamage(0.08f);  //funktion takedamage
-            Debug.Log("touched the lava");  //skriv i logs att det nuddade
-        }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        currentHealth = maxHealth;     //när spelet börjar sätts hp till fullt
-        //healthbar.SetMaxHealth(maxHealth);
-    }
+            Debug.Log("touched the lava");  //skriv i logs att de    // Start is called before the first frame update
+            void Start()
+            {
+                currentHealth = maxHealth;     //när spelet börjar sätts hp till fullt
+                                               //healthbar.SetMaxHealth(maxHealth);
+            }
 
-    void TakeDamage(float damage) //funktion som heter takedamage
-    {
-        currentHealth -= damage;
-        //healthbar.SetHealth(currentHealth);
-    }
+            void TakeDamage(float damage) //funktion som heter takedamage
+            {
+                currentHealth -= damage;
+                //healthbar.SetHealth(currentHealth);
+            }
 
-    void die() //funktion som är att dö
-    {
-        Cursor.lockState = CursorLockMode.Confined; //låser upp muspekaren igen
-        SceneManager.LoadScene(2); //ladda game over scene
-    }
-    // Update is called once per frame
-    void Update()
-    {
+            void die() //funktion som är att dö
+            {
+                Cursor.lockState = CursorLockMode.Confined; //låser upp muspekaren igen
+                SceneManager.LoadScene(2); //ladda game over scene
+            }
+            // Update is called once per frame
+            void Update()
+            {
 
-        if (currentHealth <= 0) //om hp är mindre än ELLER LIKA MED 0
-        {
-            die(); //kör funktionen die
-        }
+                if (currentHealth <= 0) //om hp är mindre än ELLER LIKA MED 0
+                {
+                    die(); //kör funktionen die
+                }
 
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //checkar om den är grounded eller inte (beroende på groundCheck)
+                isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //checkar om den är grounded eller inte (beroende på groundCheck)
 
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+                if (isGrounded && velocity.y < 0)
+                {
+                    velocity.y = -2f;
+                }
+                float x = Input.GetAxis("Horizontal");
+                float z = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * x + transform.forward * z;
+                Vector3 move = transform.right * x + transform.forward * z;
 
-        controller.Move(move * speed * Time.deltaTime);
+                controller.Move(move * speed * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
+                if (Input.GetButtonDown("Jump") && isGrounded)
+                {
+                    velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                }
 
-        velocity.y += gravity * Time.deltaTime;
+                velocity.y += gravity * Time.deltaTime;
 
-        controller.Move(velocity * Time.deltaTime);
+                controller.Move(velocity * Time.deltaTime);
 
-        //MOVING
+                //MOVING
 
-        if (Input.GetKeyDown(KeyCode.LeftShift)) //om man håller nere leftshift
-        {
-            speed = sprintspeed; //öka speed till sprintspeed
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift)) //om man släpper leftshift
-        {
-            speed = 12f; //återställ speed
+                if (Input.GetKeyDown(KeyCode.LeftShift)) //om man håller nere leftshift
+                {
+                    speed = sprintspeed; //öka speed till sprintspeed
+                }
+                if (Input.GetKeyUp(KeyCode.LeftShift)) //om man släpper leftshift
+                {
+                    speed = 12f; //återställ speed
+                }
+            }
         }
     }
 }
+
 
 //made by tim
